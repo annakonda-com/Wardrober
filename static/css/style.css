@@ -1,0 +1,25 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 54px 13vw 54px 13vw;
+}
+#main-name{
+  font-family: "Italianno", cursive;
+  font-weight: 400;
+  font-size: 64px;
+  font-style: normal;
+}
+.nav-item{
+  font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: normal;
+    text-decoration: none;
+}
+.mybtn{
+font-family: "Inter", sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  font-style: normal;
+}
