@@ -17,7 +17,7 @@
 <body>
 <header>
     <nav>
-        <h1 id="main-name">Wardrober</h1>
+        <h1 class="main-name">Wardrober</h1>
         {% if path == '/' %}
         <a href="/" class="nav-item" style="color:#0D6EFD;">Главная</a>
         {% else %}
@@ -47,5 +47,6 @@
 <main role="main" class="container">
     {% block content %}{% endblock %}
 </main>
+<div id="bottom"></div>
 </body>
 </html>
