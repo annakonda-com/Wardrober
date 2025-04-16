@@ -1,14 +1,16 @@
 from datetime import datetime
-from server import app
 import requests
+from data import db_session
+from data.news import News
 
 
-def fill_db_with_news(): # Моя идея в том, чтобы импортировать эту функцию в server.py и запускать каждый раз, когда человек заходит на главную страницу.
+def fill_db_with_news(serverkey):
+    db_sess = db_session.create_session()
     today_day = datetime.now().day
-
     if today_day % 5 == 0 or db_is_clean():  # Новые новости скачиваем каждые 5 дней или в первый раз, когда запустили сервер
-        # Здесь нужно записать инфу полученную с помощью get_news в базу данных. Возможно, get_news должна возвращать сразу объект для базы данных
-        print(get_news("stylish_way_1", 0, 2, app.config['VK_SERVICEKEY']))
+        for new in get_news("stylish_way_1", 0, 9, serverkey):
+            db_sess.add(new)
+            db_sess.commit()
 
 
 def get_news(domain, offset, count, service_api_key):
@@ -30,14 +32,12 @@ def get_news(domain, offset, count, service_api_key):
                     "отражается динамично меняющийся мир, и мы рассмотрим, как она влияет на наше восприятие себя и "
                     "окружающего нас мира. Это путешествие по миру моды поможет нам лучше понять её влияние на культуру "
                     "и общество.")
-        info = dict()
-        info["img"] = photo_url
-        info["text"] = text
-        result.append(info)
+        new = News(text=text, title=text.replace('\n', '')[:31]+'...', img_url=photo_url)
+        result.append(new)
     return result
 
 
-def db_is_clean():  # Не хочу пока возиться с базой данных. В этой функции должна проходить проверка на пустоту бд
-    return True
+def db_is_clean():
+    db_sess = db_session.create_session()
+    return True if not db_sess.query(News).all() else False
 
-fill_db_with_news()
