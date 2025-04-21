@@ -61,3 +61,57 @@ nav {
     background-color: #0D6EFD57;
     width: 100vw;
     justify-content: center;
+}
+.login-container{
+    border: 2px solid #ACCDFE;
+    border-radius: 20px;
+    margin: 54px 30vw 54px 30vw;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+.login-title{
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 14vw;
+    margin-top: 1vw;
+}
+.login-form{
+    align-items: center;
+    justify-content: center;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    margin-top: 1vw;
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+}
+.login-button{
+    margin-left: 11vw;
+    padding-right: 2vw;
+    padding-left: 2vw;
+}
+.register-button{
+    margin-left: 6vw;
+    padding-right: 2vw;
+    padding-left: 2vw;
+}
+
+#to-register{
+    font-family: "Inter", sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    font-style: normal;
+    width: 30vw;
+    margin-left: 10vw;
+}
+#user-name{
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    font-style: normal;
+    text-decoration: none;
+}

@@ -41,7 +41,11 @@
         {% else %}
         <a href="/look" class="nav-item" style="color:#000000;">Мой образ</a>
         {% endif %}
-        <button type="button" class="btn btn-primary mybtn">Вход</button>
+        {% if current_user.is_authenticated %}
+        <a id="user-name" href="/logout">{{ current_user.name }}</a>
+        {% else %}
+        <a href="/login" class="btn btn-primary mybtn">Вход</a>
+        {% endif %}
     </nav>
 </header>
 <main role="main" class="container">
