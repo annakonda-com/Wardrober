@@ -21,6 +21,9 @@ body{
   border-radius: 20px;
   margin: 54px 13vw 54px 13vw;
   padding: 20px;
+  font-family: "Inter", sans-serif;
+  font-size: 28px;
+  line-height: 150%;
 }
 nav {
   display: flex;
@@ -31,12 +34,12 @@ nav {
 .main-name{
   font-family: "Italianno", cursive;
   font-weight: 400;
-  font-size: 64px;
+  font-size: 68px;
   font-style: normal;
 }
 .nav-item, .mybtn{
   font-family: "Inter", sans-serif;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 300;
   font-style: normal;
   text-decoration: none;
@@ -45,9 +48,10 @@ nav {
 
 .info-text{
   font-family: "Inter", sans-serif;
-  font-size: 24px;
+  font-size: 28px;
   font-weight: 400;
   font-style: normal;
+  line-height: 150%;
 }
 .info{
   margin: 50px;
@@ -114,4 +118,10 @@ nav {
     font-weight: 500;
     font-style: normal;
     text-decoration: none;
+}
+.dot{
+    font-family: "Inter", sans-serif;
+    font-size: 24px;
+    font-weight: 1000;
+    margin-right: 10px;
 }
