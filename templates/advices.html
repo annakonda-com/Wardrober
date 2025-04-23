@@ -1,4 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Тут советы</h1>
+<div class="my_container">
+<div class="cards-grid_wrd">
+    {% for new in data %}
+    <div class="cards-grid_wrd">
+        <div class="card_wrd">
+            <div class="card-title_wrd">{{new["title"]}}</div>
+            <a href="/advice/{{ new['id'] }}" class="card-link_wrd">Перейти к статье</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

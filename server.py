@@ -3,6 +3,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 
 from data import db_session
 from data.users import User
+from data.news import News
 from functios.fashion_news import fill_db_with_news
 
 from forms.login import LoginForm
@@ -14,9 +15,9 @@ app.config['VK_SERVICEKEY'] = 'd7838b4cd7838b4cd7838b4c41d4acc841dd783d7838b4cb0
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("db/wardrober.db")
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -78,7 +79,20 @@ def reqister():
 
 @app.route('/advices')
 def advices():
-    return render_template('advices.html', path=request.path)
+    db_sess = db_session.create_session()
+    news = db_sess.query(News).all()
+    data = []
+    for new in news:
+        data.append(new.to_dict())
+
+    return render_template('advices.html', data=data)
+
+
+@app.route('/advice/<int:id>')
+def advice(id):
+    db_sess = db_session.create_session()
+    new = db_sess.query(News).filter(News.id == id).first().to_dict()
+    return render_template('advice.html', page_title=new['title'][:10] + '...', new=new)
 
 
 @app.route('/wardrobe')
