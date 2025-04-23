@@ -99,6 +99,16 @@ def wardrobe():
     return render_template('wardrobe.html', path=request.path)
 
 
+@app.route('/wardrobe/<string:category>')
+def categories(category):
+    return render_template('categories.html', path=request.path)
+
+
+@app.route('/wardrobe/<string:category>/<string:subcategory>')
+def subcategories(category, subcategory):
+    return render_template('subcategories.html', path=request.path)
+
+
 @app.route('/look')
 def look():
     return render_template('look.html', path=request.path)

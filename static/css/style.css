@@ -168,121 +168,71 @@ nav {
     margin-top: 10px;
 }
 
-*_wrd {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-}
-
-body_wrd {
-    background-color: #f5f5f5;
-    padding: 20px;
-
-}
-
-.categories-container_wrd {
-    max-width: 100%;
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.categories-scroll_wrd {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    padding-bottom: 10px;
-    scrollbar-width: thin;
-    scrollbar-color: #ccc #f1f1f1;
-}
-
-.categories-scroll_wrd::-webkit-scrollbar {
-    height: 6px;
-}
-
-.categories-scroll_wrd::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-}
-
-.categories-scroll_wrd::-webkit-scrollbar-thumb {
-    background-color: #ccc;
-    border-radius: 3px;
-}
-
-.category-item_wrd {
-    flex: 0 0 auto;
-    padding: 10px 15px;
-    background-color: #f8f8f8;
-    border-radius: 20px;
-    font-size: 14px;
-    color: #333;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid #e0e0e0;
-}
-
-.category-item_wrd:hover {
-    background-color: #e9e9e9;
-}
-
-.category-item_wrd.active_wrd {
-    background-color: #333;
-    color: white;
-    border-color: #333;
-}
-
-.category-item_wrd.has-subcategories_wrd::after {
-    content: "▼";
-    font-size: 10px;
-    margin-left: 5px;
-}
-
 .add-item-btn_wrd {
-    margin-left: auto;
-    padding: 10px 20px;
-    background-color: #4A90E2;
+    display: inline-block;
+    padding: 20px 24px;
+    background-color: #1A73E8;
     color: white;
+    text-align: center;
+    text-decoration: none;
     border: none;
-    border-radius: 20px;
-    font-size: 14px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.2s;
-    white-space: nowrap;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .add-item-btn_wrd:hover {
-    background-color: #45a049;
+    background-color: #ACCDFE;
 }
 
-.categories-group_wrd {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
+.button-container_wrd {
+  padding: 20px; /* Отступы вокруг кнопки */
+  max-width: 1040px; /* Максимальная ширина контейнера */
+  margin: 0 auto; /* Центрирование контейнера */
 }
 
-.categories-group_wrd:last-child {
-    margin-bottom: 0;
+.btn_categories_wrd {
+  display: inline-block;
+  padding: 20px 24px;
+  background-color: #1A73E8;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.subcategories-container_wrd {
-    display: none;
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
+.btn_categories_wrd:hover {
+    background-color: #ACCDFE;
 }
 
-.subcategories-container_wrd.active_wrd {
-    display: block;
-    animation: fadeIn_wrd 0.3s;
+.btn_subcategories_wrd {
+  display: inline-block;
+  padding: 3px 24px;
+  background-color: white;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border: 3px solid #ACCDFE;
+  border-radius: 6px;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-@keyframes fadeIn_wrd {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.btn_subcategories_wrd:hover {
+    background-color: #ACCDFE;
 }
 
 .subcategories-scroll_wrd {
@@ -290,27 +240,4 @@ body_wrd {
     overflow-x: auto;
     gap: 8px;
     padding-bottom: 8px;
-}
-
-.subcategory-item_wrd {
-    flex: 0 0 auto;
-    padding: 8px 12px;
-    background-color: #f0f0f0;
-    border-radius: 16px;
-    font-size: 13px;
-    color: #555;
-    white-space: nowrap;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: 1px solid #ddd;
-}
-
-.subcategory-item_wrd:hover {
-background-color: #e0e0e0;
-}
-
-.subcategory-item_wrd.active_wrd {
-    background-color: #555;
-    color: white;
-    border-color: #555;
 }
