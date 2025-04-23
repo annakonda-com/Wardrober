@@ -4,9 +4,11 @@ body{
   min-height: 100vh;
 }
 .my_container{
-  margin: 0px 13vw 0px 13vw;
+  margin: 0px 13vw 30px 13vw;
 }
-
+.advice_item{
+    width: 15vw;
+}
 .container{
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
