@@ -36,6 +36,8 @@ nav {
   font-weight: 400;
   font-size: 68px;
   font-style: normal;
+  margin-right: 2vw;
+  margin-right: 2vw;
 }
 .nav-item, .mybtn{
   font-family: "Inter", sans-serif;
@@ -44,6 +46,7 @@ nav {
   font-style: normal;
   text-decoration: none;
   margin: 30px;
+  line-height: 100%;
 }
 
 .info-text{
