@@ -84,8 +84,7 @@ def advices():
     data = []
     for new in news:
         data.append(new.to_dict())
-
-    return render_template('advices.html', data=data)
+    return render_template('advices.html', data=data, path=request.path)
 
 
 @app.route('/advice/<int:id>')
