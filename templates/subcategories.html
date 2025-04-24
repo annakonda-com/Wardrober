@@ -10,5 +10,48 @@
         <a href="/wardrobe/dress" class="btn_categories_wrd">Платья</a>
         <a href="/wardrobe/overalls" class="btn_categories_wrd">Комбинезоны</a>
     </div>
+
+    <div class="button-container_wrd">
+        <div class="subcategories-scroll_wrd">
+            {% if path.split('/')[-2] == "down" %}
+            <a href="/wardrobe/down/1" class="btn_subcategories_wrd">Шорты</a>
+            <a href="/wardrobe/down/2" class="btn_subcategories_wrd">Юбки</a>
+            <a href="/wardrobe/down/3" class="btn_subcategories_wrd">Спортивные штаны</a>
+            <a href="/wardrobe/down/4" class="btn_subcategories_wrd">Брюки</a>
+            <a href="/wardrobe/down/5" class="btn_subcategories_wrd">Джинсы</a>
+            {% elif path.split('/')[-2] == "dress" %}
+            <a href="/wardrobe/dress/6" class="btn_subcategories_wrd">Повседневные платья</a>
+            <a href="/wardrobe/dress/7" class="btn_subcategories_wrd">Вечерние платья</a>
+            {% elif path.split('/')[-2] == "up" %}
+            <a href="/wardrobe/up/8" class="btn_subcategories_wrd">Свитера</a>
+            <a href="/wardrobe/up/9" class="btn_subcategories_wrd">Топы</a>
+            <a href="/wardrobe/up/10" class="btn_subcategories_wrd">Футболки</a>
+            <a href="/wardrobe/up/11" class="btn_subcategories_wrd">Водолазки</a>
+            <a href="/wardrobe/up/12" class="btn_subcategories_wrd">Пиджаки</a>
+            <a href="/wardrobe/up/13" class="btn_subcategories_wrd">Рубашки и блузки</a>
+            <a href="/wardrobe/up/14" class="btn_subcategories_wrd">Толстовки</a>
+            <a href="/wardrobe/up/15" class="btn_subcategories_wrd">Жилетки</a>
+            <a href="/wardrobe/up/16" class="btn_subcategories_wrd">Верхняя одежда</a>
+            {% elif path.split('/')[-2] == "accessories" %}
+            <a href="/wardrobe/accessories/17" class="btn_subcategories_wrd">Серьги</a>
+            <a href="/wardrobe/accessories/18" class="btn_subcategories_wrd">Подвески</a>
+            <a href="/wardrobe/accessories/19" class="btn_subcategories_wrd">Браслеты</a>
+            <a href="/wardrobe/accessories/20" class="btn_subcategories_wrd">Очки</a>
+            <a href="/wardrobe/accessories/21" class="btn_subcategories_wrd">Головной убор</a>
+            {% elif path.split('/')[-2] == "shoes" %}
+            <a href="/wardrobe/shoes/22" class="btn_subcategories_wrd">Туфли</a>
+            <a href="/wardrobe/shoes/23" class="btn_subcategories_wrd">Демисезонная обувь</a>
+            <a href="/wardrobe/shoes/24" class="btn_subcategories_wrd">Зимняя обувь</a>
+            <a href="/wardrobe/shoes/25" class="btn_subcategories_wrd">Летняя обувь</a>
+            {% else %}
+            <a href="/wardrobe/overalls" class="btn_subcategories_wrd">Комбинезоны</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="button-container_wrd">
+        <div style="margin-top: 10px;">
+            <button class="add-item-btn_wrd">Добавить вещь</button>
+        </div>
+    </div>
 </div>
 {% endblock %}
