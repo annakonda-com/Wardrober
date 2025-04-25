@@ -4,6 +4,8 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from data import db_session
 from data.users import User
 from data.news import News
+from data.wardrobe_items import WardrobeItem
+from forms.add_wardrobe_item import AddWardrobeItemForm
 from functios.fashion_news import fill_db_with_news
 
 from forms.login import LoginForm
@@ -13,6 +15,8 @@ app = Flask(__name__)
 app.config['VK_APIKEY'] = 'YJYrGlxEqNSv2B5CjYUy'
 app.config['VK_SERVICEKEY'] = 'd7838b4cd7838b4cd7838b4c41d4acc841dd783d7838b4cb078efc3eb7a1bdd2bfce598'
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config['UPLOAD_FOLDER'] = 'uploads/'  # путь до папки в которую сохранять фото
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # ограничение на объём файла 16 мб
 db_session.global_init("db/wardrober.db")
 
 login_manager = LoginManager()
@@ -112,6 +116,26 @@ def subcategories(category, subcategory):
 @app.route('/look')
 def look():
     return render_template('look.html', path=request.path)
+
+
+@app.route('/add_wardrobe_item', methods=['GET', 'POST'])
+def add_wardrobe_item():
+    form = AddWardrobeItemForm()
+    if form.validate_on_submit():
+        print(form.image.data,form.name.data,form.category.data,form.subcategory.data,form.season.data,form.colors.data,)
+        # db_sess = db_session.create_session()
+        # new_item = WardrobeItem(
+        #     image=form.image.data,
+        #     name=form.name.data,
+        #     category=form.category.data,
+        #     subcategory=form.subcategory.data,
+        #     season=form.season.data,
+        #     color=form.colors.data,
+        # )
+        # db_sess.add(new_item)
+        # db_sess.commit()
+        return redirect("/add_wardrobe_item")
+    return render_template('add_wardrobe_item.html', title='Добавление вещи', form=form)
 
 
 if __name__ == '__main__':
