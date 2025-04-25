@@ -13,10 +13,13 @@ class WardrobeItem(SqlAlchemyBase, SerializerMixin):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
-    image = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+    user_id = sqlalchemy.Column(sqlalchemy.Integer,sqlalchemy.ForeignKey("users.id"))
+    img_url = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    category = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("categories.id"))
+    category_id = sqlalchemy.Column(sqlalchemy.Integer)#, sqlalchemy.ForeignKey("categories.id"))
     # храним idшники поэтому int
-    subcategory = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("subcategories.id"))
-    season = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
-    color = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("colors.id"))
+    subcategory_id = sqlalchemy.Column(sqlalchemy.Integer)#, sqlalchemy.ForeignKey("subcategories.id"))
+    season = sqlalchemy.Column(sqlalchemy.String)#, nullable=True)
+    color_id = sqlalchemy.Column(sqlalchemy.Integer)#, sqlalchemy.ForeignKey("colors.id"))
+
+    user = orm.relationship('User')

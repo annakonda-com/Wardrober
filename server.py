@@ -1,5 +1,7 @@
 from flask import render_template, Flask, request, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from sqlalchemy import text
+from sqlalchemy.testing.suite.test_reflection import users
 
 from data import db_session
 from data.users import User
@@ -123,18 +125,26 @@ def add_wardrobe_item():
     form = AddWardrobeItemForm()
     if form.validate_on_submit():
         print(form.image.data,form.name.data,form.category.data,form.subcategory.data,form.season.data,form.colors.data,)
-        # db_sess = db_session.create_session()
-        # new_item = WardrobeItem(
-        #     image=form.image.data,
-        #     name=form.name.data,
-        #     category=form.category.data,
-        #     subcategory=form.subcategory.data,
-        #     season=form.season.data,
-        #     color=form.colors.data,
-        # )
-        # db_sess.add(new_item)
-        # db_sess.commit()
-        return redirect("/add_wardrobe_item")
+        db_sess = db_session.create_session()
+        query = text("SELECT id FROM colors WHERE name = :color_name")  # Используем параметр запроса
+        color_id = db_sess.execute(query, {'color_name': form.colors.data.title()}).fetchone()[0]
+        query = text("SELECT id FROM categories WHERE name = :category_name")  # Используем параметр запроса
+        category_id = db_sess.execute(query, {'category_name': form.category.data.lower()}).fetchone()[0]
+        query = text("SELECT id FROM subcategories WHERE name = :subcategory_name")  # Используем параметр запроса
+        subcategory_id = db_sess.execute(query, {'subcategory_name': form.subcategory.data.lower()}).fetchone()[0]
+        print(color_id, category_id, subcategory_id, form.image.data)
+        new_item = WardrobeItem(
+            user_id=1,
+            name=form.name.data,
+            color_id=color_id,
+            category_id=category_id,
+            subcategory_id=subcategory_id,
+            season=form.season.data,
+            img_url=form.image.data,
+        )
+        db_sess.add(new_item)
+        db_sess.commit()
+        return redirect("/wardrobe")
     return render_template('add_wardrobe_item.html', title='Добавление вещи', form=form)
 
 
