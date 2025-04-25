@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="login-container">
+    <h1 class="login-title">Добавление вещи</h1>
+    <form action="" method="post" class="login-form">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        {% if message %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+        {% endif %}
+        <p>
+            {{ form.name.label }}<br>
+            {{ form.name(class="form-control", type="text") }}<br>
+            {% for error in form.name.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.image.label }}<br>
+            {{ form.image(class="form-control") }}<br>
+            {% for error in form.image.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.category.label }}<br>
+            {{ form.category(class="form-control", type="select") }}<br>
+            {% for error in form.category.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.subcategory.label }}<br>
+            {{ form.subcategory(class="form-control", type="select") }}<br>
+            {% for error in form.subcategory.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.season.label }}<br>
+            {{ form.season(class="form-control", type="select") }}<br>
+            {% for error in form.season.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>
+            {{ form.colors.label }}<br>
+            {{ form.colors(class="form-control", type="select") }}<br>
+            {% for error in form.colors.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-primary mybtn additem-button") }}</p>
+    </form>
+</div>
+{% endblock %}
+
