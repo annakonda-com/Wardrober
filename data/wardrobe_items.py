@@ -1,11 +1,7 @@
-import datetime
 import sqlalchemy
 from sqlalchemy import orm
-from flask_login import UserMixin
 from .db_session import SqlAlchemyBase
 from sqlalchemy_serializer import SerializerMixin
-
-from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class WardrobeItem(SqlAlchemyBase, SerializerMixin):
@@ -16,10 +12,10 @@ class WardrobeItem(SqlAlchemyBase, SerializerMixin):
     user_id = sqlalchemy.Column(sqlalchemy.Integer,sqlalchemy.ForeignKey("users.id"))
     img_url = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    category_id = sqlalchemy.Column(sqlalchemy.Integer)#, sqlalchemy.ForeignKey("categories.id"))
+    category_id = sqlalchemy.Column(sqlalchemy.Integer)
     # храним idшники поэтому int
-    subcategory_id = sqlalchemy.Column(sqlalchemy.Integer)#, sqlalchemy.ForeignKey("subcategories.id"))
-    season = sqlalchemy.Column(sqlalchemy.String)#, nullable=True)
-    color_id = sqlalchemy.Column(sqlalchemy.Integer)#, sqlalchemy.ForeignKey("colors.id"))
+    subcategory_id = sqlalchemy.Column(sqlalchemy.Integer)
+    season = sqlalchemy.Column(sqlalchemy.String)
+    color_id = sqlalchemy.Column(sqlalchemy.Integer)
 
     user = orm.relationship('User')

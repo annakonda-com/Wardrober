@@ -1,8 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
+<script>
+    const subcategories = {
+     'обувь': [['-1', 'Выберите подкатегорию'], ['туфли', 'Туфли'], ['демисезонная', 'Демисезонная'],
+        ['зимняя','Зимняя'], ['летняя','Летняя']],
+     'комбинезоны': [['-1', 'Выберите подкатегорию'], ['комбинезоны', 'Комбинезоны']],
+     'низ': [['-1', 'Выберите подкатегорию'], ['шорты', 'Шорты'], ['юбки', 'Юбки'],
+        ['спортивные штаны', 'Спортивные штаны'], ['брюки', 'Брюки'], ['джинсы', 'Джинсы']],
+     'платья': [['-1', 'Выберите подкатегорию'], ['вечерние', 'Вечерние'], ['повседневные', 'Повседневные']],
+     'верх': [['-1', 'Выберите подкатегорию'], ['футболки', 'Футболки'], ['рубашки и блузки', 'Рубашки и блузки'],
+         ['свитера', 'Свитера'], ['топы', 'Топы'], ['водолазки', 'Водолазки'], ['пиджаки', 'Пиджаки'],
+         ['толстовки', 'Толстовки'], ['жилетки', 'Жилетки'], ['верхняя одежда', 'Верхняя одежда']],
+     'аксессуары': [['-1', 'Выберите подкатегорию'], ['серьги', 'Серьги'], ['подвески', 'Подвески'],
+        ['браслеты', 'Браслеты'], ['очки', 'Очки'], ['головной убор', 'Головной убор']]
+    };
+    function updateSubcategories() {
+        const category = document.getElementById('category').value;
+        const subcategorySelect = document.getElementById('subcategory');
+        subcategorySelect.innerHTML = '';
+        subcategories[category].forEach(subcategory => {
+            const option = document.createElement('option');
+            option.value = subcategory[0];
+            option.textContent = subcategory[1];
+            subcategorySelect.appendChild(option);
+        });
+        if (category) {
+            subcategoryLabel.style.display = 'block';
+            subcategorySelect.style.display = 'block';
+        } else {
+            subcategoryLabel.style.display = 'none';
+            subcategorySelect.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        document.getElementById('subcategoryLabel').style.display = 'none';
+        document.getElementById('subcategory').style.display = 'none';
+    };
+</script>
 <div class="login-container">
     <h1 class="login-title">Добавление вещи</h1>
-    <form action="" method="post" class="login-form">
+    <form action="" method="POST" class="login-form">
         {{ form.hidden_tag() }}
         {{ form.csrf_token }}
         {% if message %}
@@ -28,17 +65,12 @@
         </p>
         <p>
             {{ form.category.label }}<br>
-            {{ form.category(class="form-control", type="select") }}<br>
+            {{ form.category(id='category', class="form-control", onchange='updateSubcategories()') }}
+            <label id="subcategoryLabel" , for="subcategory"><br>Выберите подкатегорию</label>
+            <select id="subcategory" , class="form-control" , name="subcategory">
+                <option value="">Выберите подкатегорию</option>
+            </select><br>
             {% for error in form.category.errors %}
-        <div class="alert alert-danger" role="alert">
-            {{ error }}
-        </div>
-        {% endfor %}
-        </p>
-        <p>
-            {{ form.subcategory.label }}<br>
-            {{ form.subcategory(class="form-control", type="select") }}<br>
-            {% for error in form.subcategory.errors %}
         <div class="alert alert-danger" role="alert">
             {{ error }}
         </div>

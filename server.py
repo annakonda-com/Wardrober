@@ -1,4 +1,4 @@
-from flask import render_template, Flask, request, redirect
+from flask import render_template, Flask, request, redirect, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import text
 from sqlalchemy.testing.suite.test_reflection import users
@@ -17,8 +17,6 @@ app = Flask(__name__)
 app.config['VK_APIKEY'] = 'YJYrGlxEqNSv2B5CjYUy'
 app.config['VK_SERVICEKEY'] = 'd7838b4cd7838b4cd7838b4c41d4acc841dd783d7838b4cb078efc3eb7a1bdd2bfce598'
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-app.config['UPLOAD_FOLDER'] = 'uploads/'  # путь до папки в которую сохранять фото
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # ограничение на объём файла 16 мб
 db_session.global_init("db/wardrober.db")
 
 login_manager = LoginManager()
@@ -124,14 +122,16 @@ def look():
 def add_wardrobe_item():
     form = AddWardrobeItemForm()
     if form.validate_on_submit():
-        print(form.image.data,form.name.data,form.category.data,form.subcategory.data,form.season.data,form.colors.data,)
         db_sess = db_session.create_session()
-        query = text("SELECT id FROM colors WHERE name = :color_name")  # Используем параметр запроса
+        query = text("SELECT id FROM colors WHERE name = :color_name")
         color_id = db_sess.execute(query, {'color_name': form.colors.data.title()}).fetchone()[0]
-        query = text("SELECT id FROM categories WHERE name = :category_name")  # Используем параметр запроса
+        query = text("SELECT id FROM categories WHERE name = :category_name")
         category_id = db_sess.execute(query, {'category_name': form.category.data.lower()}).fetchone()[0]
-        query = text("SELECT id FROM subcategories WHERE name = :subcategory_name")  # Используем параметр запроса
-        subcategory_id = db_sess.execute(query, {'subcategory_name': form.subcategory.data.lower()}).fetchone()[0]
+        if form.subcategory.data!='-1':
+            query = text("SELECT id FROM subcategories WHERE name = :subcategory_name")
+            subcategory_id = db_sess.execute(query, {'subcategory_name': form.subcategory.data.lower()}).fetchone()[0]
+        else:
+            subcategory_id=-1
         print(color_id, category_id, subcategory_id, form.image.data)
         new_item = WardrobeItem(
             user_id=1,
@@ -145,8 +145,10 @@ def add_wardrobe_item():
         db_sess.add(new_item)
         db_sess.commit()
         return redirect("/wardrobe")
+    else:
+        print(form.errors)
     return render_template('add_wardrobe_item.html', title='Добавление вещи', form=form)
 
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1', debug=True)
