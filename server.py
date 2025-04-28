@@ -1,7 +1,11 @@
+import os
+
 from flask import render_template, Flask, request, redirect, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from sqlalchemy import text
 from sqlalchemy.testing.suite.test_reflection import users
+from werkzeug.utils import secure_filename
+from uuid import uuid4
 
 from data import db_session
 from data.users import User
@@ -133,6 +137,10 @@ def add_wardrobe_item():
         else:
             subcategory_id=-1
         print(color_id, category_id, subcategory_id, form.image.data)
+        f = form.image.data
+        filename = f.filename.split('.')
+        filename = str(uuid4()) + '.' + filename[1]
+        f.save(os.path.join(app.root_path, 'data', 'users_images', filename))
         new_item = WardrobeItem(
             user_id=1,
             name=form.name.data,
@@ -140,7 +148,7 @@ def add_wardrobe_item():
             category_id=category_id,
             subcategory_id=subcategory_id,
             season=form.season.data,
-            img_url=form.image.data,
+            img_url=filename,
         )
         db_sess.add(new_item)
         db_sess.commit()

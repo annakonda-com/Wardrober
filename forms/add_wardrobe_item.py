@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileRequired
 from wtforms import StringField, SubmitField
 from wtforms.fields.choices import SelectField
 from wtforms.fields.simple import FileField
@@ -7,7 +8,7 @@ from wtforms.validators import DataRequired
 
 class AddWardrobeItemForm(FlaskForm):
     name = StringField('Название', validators=[DataRequired()])
-    image = FileField('Загрузить фото', validators=[DataRequired()])
+    image = FileField('Загрузить фото', validators=[FileRequired()])
     category = SelectField('Выберите категорию', choices=[('', '...'),
                                                           ('обувь', 'Обувь'),
                                                           ('комбинезоны', 'Комбинезоны'),

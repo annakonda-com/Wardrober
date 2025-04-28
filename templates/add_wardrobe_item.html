@@ -39,7 +39,7 @@
 </script>
 <div class="login-container">
     <h1 class="login-title">Добавление вещи</h1>
-    <form action="" method="POST" class="login-form">
+    <form action="" method="POST" class="login-form" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         {{ form.csrf_token }}
         {% if message %}
