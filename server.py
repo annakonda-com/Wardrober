@@ -104,6 +104,14 @@ def advice(id):
 
 @app.route('/wardrobe')
 def wardrobe():
+    db_sess = db_session.create_session()
+    color = request.args.get('colors')
+    season = request.args.get('season')
+    if color is None and season is None:
+        query = text(
+            "SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id")
+        items = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
+        return render_template('wardrobe.html', path=request.path, items=items)
     return render_template('wardrobe.html', path=request.path)
 
 
@@ -113,16 +121,36 @@ def categories(category):
     color = request.args.get('colors')
     season = request.args.get('season')
     if color is None and season is None:
-        query = text("SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND category_id = :category_id")
-        items = db_sess.execute(query, {'user_id': current_user.get_id(), 'category_id':category}).fetchall()
-        print(items)
+        query = text(
+            "SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND category_id = :category_id")
+        items = db_sess.execute(query, {'user_id': current_user.get_id(), 'category_id': category}).fetchall()
         return render_template('categories.html', path=request.path, items=items)
     return render_template('categories.html', path=request.path)
 
 
 @app.route('/wardrobe/<int:category>/<int:subcategory>')
 def subcategories(category, subcategory):
+    db_sess = db_session.create_session()
+    color = request.args.get('colors')
+    season = request.args.get('season')
+    if color is None and season is None:
+        query = text(
+            "SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND category_id = :category_id "
+            "AND subcategory_id = :subcategory_id")
+        items = db_sess.execute(query, {'user_id': current_user.get_id(), 'category_id': category,
+                                        'subcategory_id': subcategory}).fetchall()
+
+        return render_template('subcategories.html', path=request.path, items=items)
     return render_template('subcategories.html', path=request.path)
+
+
+@app.route('/wardrobe/<int:category>/<int:subcategory>/<int:item_id>')
+def item(captegory, subcategory, item_id):
+    db_sess = db_session.create_session()
+    query = text(
+        "SELECT name, img_url FROM wardrobeitems WHERE user_id = :user_id AND id = :item_id")
+    items = db_sess.execute(query, {'user_id': current_user.get_id(), 'item_id': item_id}).fetchone()
+    return render_template('wardrobe_item.html', path=request.path, name=items[0], url=items[1])
 
 
 @app.route('/look')
@@ -139,11 +167,11 @@ def add_wardrobe_item():
         color_id = db_sess.execute(query, {'color_name': form.colors.data.title()}).fetchone()[0]
         query = text("SELECT id FROM categories WHERE name = :category_name")
         category_id = db_sess.execute(query, {'category_name': form.category.data.lower()}).fetchone()[0]
-        if form.subcategory.data!='-1':
+        if form.subcategory.data != '-1':
             query = text("SELECT id FROM subcategories WHERE name = :subcategory_name")
             subcategory_id = db_sess.execute(query, {'subcategory_name': form.subcategory.data.lower()}).fetchone()[0]
         else:
-            subcategory_id=-1
+            subcategory_id = -1
         print(color_id, category_id, subcategory_id, form.image.data)
         f = form.image.data
         filename = f.filename.split('.')

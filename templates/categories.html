@@ -47,21 +47,26 @@
             {% endif %}
         </div>
     </div>
+
     <div class="button-container_wrd">
         <div style="margin-top: 10px;">
             <a href="/add_wardrobe_item" class="add-item-btn_wrd">Добавить вещь</a>
         </div>
     </div>
-    <div class="cards-grid_wrd">
-        {% for item in items %}
-        <div class="cards-grid_wrd">
-            <div class="card_wrd">
-                <div class="card-title_wrd">{{item[1]}}</div>
-                <a href="#" class="card-link_wrd">Перейти к вещи</a>
-                <img src="/data/users_images/{{item[2]}}"/>
+    <div class="button-container_wrd">
+        <div style="margin-top: 30px;">
+            <div style="margin-bottom: 30px;">
+                <div class="cards-grid_wrd">
+                    {% for item in items %}
+                    <div class="card_wrd">
+                        <div class="card-title_wrd">{{item[1]}}</div>
+                        <a href="#" class="card-link_wrd">Перейти к вещи</a>
+                        <img src="/data/users_images/{{item[2]}}"/>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}
