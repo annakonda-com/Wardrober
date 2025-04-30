@@ -12,7 +12,6 @@ def fill_db_with_news(serverkey):
         for new in db_sess.query(News).all():
             db_sess.delete(new)
             db_sess.commit()
-        db_sess.execute(text("ALTER TABLE news AUTOINCREMENT = 1"))
         db_sess.commit()
         for new in get_news("stylish_way_1", 0, 12, serverkey):
             db_sess.add(new)

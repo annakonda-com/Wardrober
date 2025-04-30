@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="body_wrd">
+<div class="my_container">
+    {% if current_user.is_authenticated %}
     <div class="button-container_wrd">
         <a href="/wardrobe" class="btn_categories_wrd">Все</a>
         <a href="/wardrobe/5" class="btn_categories_wrd">Верх</a>
@@ -91,5 +92,9 @@
             </div>
         </div>
     </div>
+    {% else %}
+    <h1>Для добавления вещей в гардероб, пожалуйста, войдите или зарегистрируйтесь</h1>
+    <h2><a href="/login">Войти или зарегистрироваться</a></h2>
+    {% endif %}
 </div>
 {% endblock %}

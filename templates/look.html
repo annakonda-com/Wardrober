@@ -1,4 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Тут образ</h1>
+{% if current_user.is_authenticated %}
+<h1>Это твой образ</h1>
+{% else %}
+<div class="my_container">
+    <h1>Для просмотра своего образа, пожалуйста, войдите или зарегистрируйтесь</h1>
+    <h2><a href="/login">Войти или зарегистрироваться</a></h2>
+</div>
+{% endif %}
 {% endblock %}

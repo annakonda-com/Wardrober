@@ -107,12 +107,20 @@ def wardrobe():
     return render_template('wardrobe.html', path=request.path)
 
 
-@app.route('/wardrobe/<string:category>')
+@app.route('/wardrobe/<int:category>')
 def categories(category):
+    db_sess = db_session.create_session()
+    color = request.args.get('colors')
+    season = request.args.get('season')
+    if color is None and season is None:
+        query = text("SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND category_id = :category_id")
+        items = db_sess.execute(query, {'user_id': current_user.get_id(), 'category_id':category}).fetchall()
+        print(items)
+        return render_template('categories.html', path=request.path, items=items)
     return render_template('categories.html', path=request.path)
 
 
-@app.route('/wardrobe/<string:category>/<string:subcategory>')
+@app.route('/wardrobe/<int:category>/<int:subcategory>')
 def subcategories(category, subcategory):
     return render_template('subcategories.html', path=request.path)
 
@@ -142,7 +150,7 @@ def add_wardrobe_item():
         filename = str(uuid4()) + '.' + filename[1]
         f.save(os.path.join(app.root_path, 'data', 'users_images', filename))
         new_item = WardrobeItem(
-            user_id=1,
+            user_id=current_user.get_id(),
             name=form.name.data,
             color_id=color_id,
             category_id=category_id,
