@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
+{% if current_user.is_authenticated %}
 <div class="for_multiple_blocks" xmlns="http://www.w3.org/1999/html">
-    {% if current_user.is_authenticated %}
     <form action="" method="GET" id="filter">
         <h3>Выберите цвета:</h3>
         {% for color in colors %}
@@ -99,9 +99,12 @@
             </div>
         </div>
         {% else %}
-        <h1>Для добавления вещей в гардероб, пожалуйста, войдите или зарегистрируйтесь</h1>
-        <h2><a href="/login">Войти или зарегистрироваться</a></h2>
+        <div class="my_container">
+            <h1>Для добавления вещей в гардероб, пожалуйста, войдите или зарегистрируйтесь</h1>
+            <h2><a href="/login">Войти или зарегистрироваться</a></h2>
+        </div>
     </div>
-    {% endif %}
+
 </div>
+{% endif %}
 {% endblock %}

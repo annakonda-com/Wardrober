@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="for_multiple_blocks">
-    <form action="" method="POST" class="login-form" enctype="multipart/form-data" id="filter">
+    <form action="" method="GET" id="filter">
         <h3>Выберите цвета:</h3>
         {% for color in colors %}
         <label>
             <input type="checkbox" value="{{ color[0] }}" name="color">
-            {{ color[0] }}
+            {{ color[1] }}
         </label>
         {% endfor %}
         <br>
@@ -27,7 +27,7 @@
             <input type="checkbox" value="Осень" name="season">
             Осень
         </label>
-        <a href="#" class="btn btn-primary mybtn">Применить фильтры</a>
+        <input type="submit" class="btn btn-primary mybtn" value="Применить фильтры">
     </form>
     <div class="my_container-wardrobe">
         <div class="button-container_wrd">
