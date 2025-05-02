@@ -1,76 +1,107 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="my_container">
+<div class="for_multiple_blocks" xmlns="http://www.w3.org/1999/html">
     {% if current_user.is_authenticated %}
-    <div class="button-container_wrd">
-        <a href="/wardrobe" class="btn_categories_wrd">Все</a>
-        <a href="/wardrobe/5" class="btn_categories_wrd">Верх</a>
-        <a href="/wardrobe/3" class="btn_categories_wrd">Низ</a>
-        <a href="/wardrobe/1" class="btn_categories_wrd">Обувь</a>
-        <a href="/wardrobe/6" class="btn_categories_wrd">Аксессуары</a>
-        <a href="/wardrobe/4" class="btn_categories_wrd">Платья</a>
-        <a href="/wardrobe/2" class="btn_categories_wrd">Комбинезоны</a>
-    </div>
+    <form action="" method="GET" id="filter">
+        <h3>Выберите цвета:</h3>
+        {% for color in colors %}
+        <label>
+            <input type="checkbox" value="{{ color[0] }}" name="color">
+            {{ color[1] }}
+        </label>
+        {% endfor %}
+        <br>
+        <h3>Выберите сезон:</h3>
+        <label>
+            <input type="checkbox" value="Зима" name="season">
+            Зима
+        </label>
+        <label>
+            <input type="checkbox" value="Весна" name="season">
+            Весна
+        </label>
+        <label>
+            <input type="checkbox" value="Лето" name="season">
+            Лето
+        </label>
+        <label>
+            <input type="checkbox" value="Осень" name="season">
+            Осень
+        </label>
+        <input type="submit" class="btn btn-primary mybtn" value="Применить фильтры">
+    </form>
 
-    <div class="button-container_wrd">
-        <div class="subcategories-scroll_wrd">
-            <a href="/wardrobe/3/1" class="btn_subcategories_wrd">Шорты</a>
-            <a href="/wardrobe/3/2" class="btn_subcategories_wrd">Юбки</a>
-            <a href="/wardrobe/3/3" class="btn_subcategories_wrd">Спортивные штаны</a>
-            <a href="/wardrobe/3/4" class="btn_subcategories_wrd">Брюки</a>
-            <a href="/wardrobe/3/5" class="btn_subcategories_wrd">Джинсы</a>
-
-            <a href="/wardrobe/4/6" class="btn_subcategories_wrd">Повседневные платья</a>
-            <a href="/wardrobe/4/7" class="btn_subcategories_wrd">Вечерние платья</a>
-
-            <a href="/wardrobe/5/8" class="btn_subcategories_wrd">Свитера</a>
-            <a href="/wardrobe/5/9" class="btn_subcategories_wrd">Топы</a>
-            <a href="/wardrobe/5/10" class="btn_subcategories_wrd">Футболки</a>
-            <a href="/wardrobe/5/11" class="btn_subcategories_wrd">Водолазки</a>
-            <a href="/wardrobe/5/12" class="btn_subcategories_wrd">Пиджаки</a>
-            <a href="/wardrobe/5/13" class="btn_subcategories_wrd">Рубашки и блузки</a>
-            <a href="/wardrobe/5/14" class="btn_subcategories_wrd">Толстовки</a>
-            <a href="/wardrobe/5/15" class="btn_subcategories_wrd">Жилетки</a>
-            <a href="/wardrobe/5/16" class="btn_subcategories_wrd">Верхняя одежда</a>
-
-            <a href="/wardrobe/6/17" class="btn_subcategories_wrd">Серьги</a>
-            <a href="/wardrobe/6/18" class="btn_subcategories_wrd">Подвески</a>
-            <a href="/wardrobe/6/19" class="btn_subcategories_wrd">Браслеты</a>
-            <a href="/wardrobe/6/20" class="btn_subcategories_wrd">Очки</a>
-            <a href="/wardrobe/6/21" class="btn_subcategories_wrd">Головной убор</a>
-
-            <a href="/wardrobe/1/22" class="btn_subcategories_wrd">Туфли</a>
-            <a href="/wardrobe/1/23" class="btn_subcategories_wrd">Демисезонная обувь</a>
-            <a href="/wardrobe/1/24" class="btn_subcategories_wrd">Зимняя обувь</a>
-            <a href="/wardrobe/1/25" class="btn_subcategories_wrd">Летняя обувь</a>
-
-            <a href="/wardrobe/2" class="btn_subcategories_wrd">Комбинезоны</a>
+    <div class="my_container-wardrobe">
+        <div class="button-container_wrd">
+            <a href="/wardrobe" class="btn_categories_wrd">Все</a>
+            <a href="/wardrobe/5" class="btn_categories_wrd">Верх</a>
+            <a href="/wardrobe/3" class="btn_categories_wrd">Низ</a>
+            <a href="/wardrobe/1" class="btn_categories_wrd">Обувь</a>
+            <a href="/wardrobe/6" class="btn_categories_wrd">Аксессуары</a>
+            <a href="/wardrobe/4" class="btn_categories_wrd">Платья</a>
+            <a href="/wardrobe/2" class="btn_categories_wrd">Комбинезоны</a>
         </div>
-    </div>
-    <div class="button-container_wrd">
-        <div style="margin-top: 10px;">
-            <a href="/add_wardrobe_item" class="add-item-btn_wrd">Добавить вещь</a>
-        </div>
-    </div>
 
-    <div class="button-container_wrd">
-        <div style="margin-top: 30px;">
-            <div style="margin-bottom: 30px;">
-                <div class="cards-grid_wrd">
-                    {% for item in items %}
-                    <div class="card_wrd">
-                        <div class="card-title_wrd">{{item[1]}}</div>
-                        <a href="#" class="card-link_wrd">Перейти к вещи</a>
-                        <img src="/data/users_images/{{item[2]}}"/>
+        <div class="button-container_wrd">
+            <div class="subcategories-scroll_wrd">
+                <a href="/wardrobe/3/1" class="btn_subcategories_wrd">Шорты</a>
+                <a href="/wardrobe/3/2" class="btn_subcategories_wrd">Юбки</a>
+                <a href="/wardrobe/3/3" class="btn_subcategories_wrd">Спортивные штаны</a>
+                <a href="/wardrobe/3/4" class="btn_subcategories_wrd">Брюки</a>
+                <a href="/wardrobe/3/5" class="btn_subcategories_wrd">Джинсы</a>
+
+                <a href="/wardrobe/4/6" class="btn_subcategories_wrd">Повседневные платья</a>
+                <a href="/wardrobe/4/7" class="btn_subcategories_wrd">Вечерние платья</a>
+
+                <a href="/wardrobe/5/8" class="btn_subcategories_wrd">Свитера</a>
+                <a href="/wardrobe/5/9" class="btn_subcategories_wrd">Топы</a>
+                <a href="/wardrobe/5/10" class="btn_subcategories_wrd">Футболки</a>
+                <a href="/wardrobe/5/11" class="btn_subcategories_wrd">Водолазки</a>
+                <a href="/wardrobe/5/12" class="btn_subcategories_wrd">Пиджаки</a>
+                <a href="/wardrobe/5/13" class="btn_subcategories_wrd">Рубашки и блузки</a>
+                <a href="/wardrobe/5/14" class="btn_subcategories_wrd">Толстовки</a>
+                <a href="/wardrobe/5/15" class="btn_subcategories_wrd">Жилетки</a>
+                <a href="/wardrobe/5/16" class="btn_subcategories_wrd">Верхняя одежда</a>
+
+                <a href="/wardrobe/6/17" class="btn_subcategories_wrd">Серьги</a>
+                <a href="/wardrobe/6/18" class="btn_subcategories_wrd">Подвески</a>
+                <a href="/wardrobe/6/19" class="btn_subcategories_wrd">Браслеты</a>
+                <a href="/wardrobe/6/20" class="btn_subcategories_wrd">Очки</a>
+                <a href="/wardrobe/6/21" class="btn_subcategories_wrd">Головной убор</a>
+
+                <a href="/wardrobe/1/22" class="btn_subcategories_wrd">Туфли</a>
+                <a href="/wardrobe/1/23" class="btn_subcategories_wrd">Демисезонная обувь</a>
+                <a href="/wardrobe/1/24" class="btn_subcategories_wrd">Зимняя обувь</a>
+                <a href="/wardrobe/1/25" class="btn_subcategories_wrd">Летняя обувь</a>
+
+                <a href="/wardrobe/2" class="btn_subcategories_wrd">Комбинезоны</a>
+            </div>
+        </div>
+        <div class="button-container_wrd">
+            <div style="margin-top: 10px;">
+                <a href="/add_wardrobe_item" class="add-item-btn_wrd">Добавить вещь</a>
+            </div>
+        </div>
+
+        <div class="button-container_wrd">
+            <div style="margin-top: 30px;">
+                <div style="margin-bottom: 30px;">
+                    <div class="cards-grid_wrd">
+                        {% for item in items %}
+                        <div class="card_wrd">
+                            <div class="card-title_wrd">{{item[1]}}</div>
+                            <a href="#" class="card-link_wrd">Перейти к вещи</a>
+                            <img src="/data/users_images/{{item[2]}}"/>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
+        {% else %}
+        <h1>Для добавления вещей в гардероб, пожалуйста, войдите или зарегистрируйтесь</h1>
+        <h2><a href="/login">Войти или зарегистрироваться</a></h2>
     </div>
-    {% else %}
-    <h1>Для добавления вещей в гардероб, пожалуйста, войдите или зарегистрируйтесь</h1>
-    <h2><a href="/login">Войти или зарегистрироваться</a></h2>
     {% endif %}
 </div>
 {% endblock %}

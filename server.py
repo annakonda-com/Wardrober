@@ -105,32 +105,62 @@ def advice(id):
 @app.route('/wardrobe')
 def wardrobe():
     db_sess = db_session.create_session()
-    color = request.args.get('colors')
-    season = request.args.get('season')
-    if color is None and season is None:
+    query = text("SELECT id, name FROM colors")
+    colors = db_sess.execute(query).fetchall()
+
+    color = list(map(int, request.args.getlist('color')))
+    season = request.args.getlist('season')
+    if color == [] and season == []:
         query = text(
             "SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id")
         items = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
-        return render_template('wardrobe.html', path=request.path, items=items)
-    return render_template('wardrobe.html', path=request.path)
+        return render_template('wardrobe.html', path=request.path, items=items, colors=colors)
+
+    if color != [] and season == []:
+        color = tuple(color) if len(color) > 1 else f"({color[0]})"
+        query = text(
+            f"SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND color_id IN {color}")
+        items = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
+        return render_template('wardrobe.html', path=request.path, items=items, colors=colors)
+
+    if color == [] and season != []:
+        season = tuple(season) if len(season) > 1 else f"({season[0]})"
+        query = text(
+            f"SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND season IN {season}")
+        items = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
+        return render_template('wardrobe.html', path=request.path, items=items, colors=colors)
+
+    if color != [] and season != []:
+        color = tuple(color) if len(color) > 1 else f"({color[0]})"
+        season = tuple(season) if len(season) > 1 else f"({season[0]})"
+        query = text(
+            f"SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND season IN {season} AND color_id IN {color}")
+        items = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
+        return render_template('wardrobe.html', path=request.path, items=items, colors=colors)
+    return render_template('wardrobe.html', path=request.path, colors=colors)
 
 
 @app.route('/wardrobe/<int:category>')
 def categories(category):
     db_sess = db_session.create_session()
+    query = text("SELECT name FROM colors")
+    colors = db_sess.execute(query).fetchall()
     color = request.args.get('colors')
     season = request.args.get('season')
     if color is None and season is None:
         query = text(
             "SELECT id, name, img_url FROM wardrobeitems WHERE user_id = :user_id AND category_id = :category_id")
         items = db_sess.execute(query, {'user_id': current_user.get_id(), 'category_id': category}).fetchall()
-        return render_template('categories.html', path=request.path, items=items)
-    return render_template('categories.html', path=request.path)
+        return render_template('categories.html', path=request.path, items=items, colors=colors)
+    return render_template('categories.html', path=request.path, colors=colors)
 
 
 @app.route('/wardrobe/<int:category>/<int:subcategory>')
 def subcategories(category, subcategory):
     db_sess = db_session.create_session()
+    query = text("SELECT name FROM colors")
+    colors = db_sess.execute(query).fetchall()
+
     color = request.args.get('colors')
     season = request.args.get('season')
     if color is None and season is None:
@@ -140,8 +170,9 @@ def subcategories(category, subcategory):
         items = db_sess.execute(query, {'user_id': current_user.get_id(), 'category_id': category,
                                         'subcategory_id': subcategory}).fetchall()
 
-        return render_template('subcategories.html', path=request.path, items=items)
-    return render_template('subcategories.html', path=request.path)
+        return render_template('subcategories.html', path=request.path, items=items, colors=colors)
+    print(color, season)
+    return render_template('subcategories.html', path=request.path, colors=colors)
 
 
 @app.route('/wardrobe/<int:category>/<int:subcategory>/<int:item_id>')
