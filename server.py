@@ -9,6 +9,7 @@ from data import db_session
 from data.users import User
 from data.news import News
 from data.wardrobe_items import WardrobeItem
+from forms.add_item_in_look import AddItemInLook
 from forms.add_wardrobe_item import AddWardrobeItemForm
 from functios.fashion_news import fill_db_with_news
 
@@ -187,6 +188,22 @@ def add_wardrobe_item():
     else:
         print(form.errors)
     return render_template('add_wardrobe_item.html', title='Добавление вещи', form=form)
+
+
+@app.route('/add_item_in_look', methods=['GET', 'POST'])
+def add_item_in_look():
+    db_sess = db_session.create_session()
+    query = text("SELECT name FROM complects")
+    looks = list(db_sess.execute(query).fetchall())
+    look_choices = [('', '...'), ('newlook', 'Новый образ')]
+    for el in looks:
+        look_choices.append((el.lower(), el))
+    form = AddItemInLook(look_choices=look_choices)
+    if form.validate_on_submit():
+        ...
+    else:
+        print(form.errors)
+    return render_template('add_item_in_look.html', title='Добавление вещи в образ', form=form)
 
 
 if __name__ == '__main__':

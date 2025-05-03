@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<script>
+    function toggleNewLookNameField() {
+        const lookSelect = document.getElementById('look');
+        const newLookNameField = document.getElementById('newlookname');
+        if (lookSelect.value === 'newlook') {
+            newLookNameField.style.display = 'block';
+        } else {
+            newLookNameField.style.display = 'none';
+        }
+    }
+    window.onload = function() {
+        document.getElementById('newlookname').style.display = 'none';
+        toggleNewLookNameField();
+    };
+</script>
+
+<div class="login-container">
+    <h1 class="login-title">Добавление вещи</h1>
+    <form action="" method="POST" class="login-form" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        {{ form.csrf_token }}
+        {% if message %}
+        <div class="alert alert-danger" role="alert">{{ message }}</div>
+        {% endif %}
+        <p>
+            {{ form.look.label }}<br>
+            {{ form.look(class="form-control", type="select", onchange="toggleNewLookNameField()") }}<br>
+            {% for error in form.look.errors %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endfor %}
+        </p>
+        <div id="newlookname">
+            <label for="newlookname_input">Введите название нового образа:</label>
+            <input type="text" class="form-control" id="newlookname_input" name="newlookname" />
+        </div>
+        <p>{{ form.submit(type="submit", class="btn btn-primary mybtn additem-button") }}</p>
+    </form>
+</div>
+{% endblock %}
