@@ -168,13 +168,17 @@ def add_wardrobe_item():
         filename = f.filename.split('.')
         filename = str(uuid4()) + '.' + filename[-1]
         f.save(os.path.join(app.root_path, 'data', 'users_images', filename))
+        if form.season.data == '...':
+            season = 'a'
+        else:
+            season = form.season.data
         new_item = WardrobeItem(
             user_id=current_user.get_id(),
             name=form.name.data,
             color_id=color_id,
             category_id=category_id,
             subcategory_id=subcategory_id,
-            season=form.season.data,
+            season=season,
             img_url=filename,
         )
         db_sess.add(new_item)
