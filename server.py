@@ -166,7 +166,7 @@ def add_wardrobe_item():
         print(color_id, category_id, subcategory_id, form.image.data)
         f = form.image.data
         filename = f.filename.split('.')
-        filename = str(uuid4()) + '.' + filename[1]
+        filename = str(uuid4()) + '.' + filename[-1]
         f.save(os.path.join(app.root_path, 'data', 'users_images', filename))
         new_item = WardrobeItem(
             user_id=current_user.get_id(),
