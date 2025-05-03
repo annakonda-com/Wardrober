@@ -167,7 +167,7 @@ def add_wardrobe_item():
         f = form.image.data
         filename = f.filename.split('.')
         filename = str(uuid4()) + '.' + filename[-1]
-        f.save(os.path.join(app.root_path, 'data', 'users_images', filename))
+        f.save(os.path.join(app.root_path, 'static', 'users_images', filename))
         if form.season.data == '...':
             season = 'a'
         else:
