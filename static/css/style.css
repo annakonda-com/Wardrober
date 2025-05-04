@@ -163,7 +163,7 @@ nav {
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     padding: 15px;
-    height: 300px;
+    height: 320px;
     display: flex;
     flex-direction: column;
 }
@@ -276,4 +276,16 @@ nav {
     font-style: normal;
     margin-top: 1vw;
     text-align: center;
+}
+
+#filter-btn{
+    width: 13vw;
+    font-size: 1vw;
+    margin: 1vw;
+}
+
+#item-img{
+    height: 200px;
+    width: auto;
+    object-fit: contain;
 }

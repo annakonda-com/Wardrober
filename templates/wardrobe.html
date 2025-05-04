@@ -28,7 +28,7 @@
             <input type="checkbox" value="Осень" name="season">
             Осень
         </label>
-        <input type="submit" class="btn btn-primary mybtn" value="Применить фильтры">
+        <input type="submit" id="filter-btn" class="btn btn-primary mybtn" value="Применить фильтры">
     </form>
 
     <div class="my_container-wardrobe">
@@ -92,7 +92,7 @@
                             <div class="card-title_wrd">{{item[1]}}</div>
                             <a href="#" class="card-link_wrd">Перейти к вещи</a>
                             <br>
-                            <img src="/static/users_images/{{item[2]}}" class="cards_img"/>
+                            <img id="item-img" src="/static/users_images/{{item[2]}}" />
                         </div>
                         {% endfor %}
                     </div>
