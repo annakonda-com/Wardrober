@@ -149,7 +149,9 @@ nav {
     font-weight: 1000;
     margin-right: 10px;
 }
-
+.cards_img{
+    height: 150px;
+}
 .cards-grid_wrd {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

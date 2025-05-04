@@ -7,6 +7,7 @@
         <div class="card_wrd">
             <div class="card-title_wrd">{{new["title"]}}</div>
             <a href="/advice/{{ new['id'] }}" class="card-link_wrd">Перейти к статье</a>
+            <img src="{{ new['img_url'] }} " class="cards_img"/>
         </div>
     </div>
     {% endfor %}
