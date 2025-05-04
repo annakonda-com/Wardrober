@@ -6,6 +6,7 @@ from sqlalchemy import text
 from uuid import uuid4
 
 from data import db_session
+from data.complect import Complect
 from data.users import User
 from data.news import News
 from data.wardrobe_items import WardrobeItem
@@ -194,13 +195,37 @@ def add_wardrobe_item():
 def add_item_in_look():
     db_sess = db_session.create_session()
     query = text("SELECT name FROM complects")
-    looks = list(db_sess.execute(query).fetchall())
+    looks = [el[0] for el in list(db_sess.execute(query).fetchall())]
     look_choices = [('', '...'), ('newlook', 'Новый образ')]
     for el in looks:
         look_choices.append((el.lower(), el))
     form = AddItemInLook(look_choices=look_choices)
     if form.validate_on_submit():
-        ...
+        if form.look.data=='newlook':
+            if form.newlookname.data in looks:
+                return render_template('add_item_in_look.html', title='Добавление вещи в образ',
+                                       form=form, message="Образ с таким названием уже есть")
+            if form.newlookname.data == '':
+                return render_template('add_item_in_look.html', title='Добавление вещи в образ',
+                                       form=form, message="Название не может отсутствовать")
+            new_look = Complect(
+                user_id=current_user.get_id(),
+                name=form.newlookname.data,
+                is_for_today=False,
+            )
+            db_sess.add(new_look)
+            db_sess.commit()
+            query = text("SELECT id FROM complects WHERE name = :complect_name")
+            look_id = db_sess.execute(query, {'complect_name': form.newlookname.data}).fetchone()[0]
+        else:
+            query = text("SELECT id FROM complects WHERE name = :complect_name")
+            look_id = db_sess.execute(query, {'complect_name': form.look.data}).fetchone()[0]
+        item_id = 1 #!!! надо сделать привязку к вещи
+        query=text('INSERT INTO complect_items (complect_id, wardrobe_item_id)  VALUES (:look_id, :item_id);')
+        print(look_id)
+        db_sess.execute(query, {'look_id': look_id, 'item_id': item_id})
+        db_sess.commit()
+        return redirect("/wardrobe")
     else:
         print(form.errors)
     return render_template('add_item_in_look.html', title='Добавление вещи в образ', form=form)

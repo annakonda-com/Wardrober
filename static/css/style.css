@@ -103,7 +103,7 @@ nav {
     font-size: 28px;
     font-weight: 400;
     font-style: normal;
-    margin-left: 14vw;
+    text-align: center;
     margin-top: 1vw;
 }
 .login-form{
@@ -266,4 +266,12 @@ nav {
     margin-left: 9vw;
     padding-right: 2vw;
     padding-left: 2vw;
+}
+.add-in-look-title{
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: normal;
+    margin-top: 1vw;
+    text-align: center;
 }
