@@ -114,6 +114,26 @@ def wardrobe():
                            items=get_items_by_filter_main(color, season, db_sess), colors=colors)
 
 
+@app.route('/wardrobe/card_of_thing/<int:item_id>')
+def card_of_thing(item_id):
+    db_sess = db_session.create_session()
+    query = text(f"SELECT name, color_id, category_id, subcategory_id, season, img_url FROM wardrobeitems WHERE id = {item_id}")
+    items = db_sess.execute(query).fetchone()
+    itt = [items[0]]
+    query = text(f"SELECT name FROM colors WHERE id = {items[1]}")
+    itt.append(db_sess.execute(query).fetchone()[0].lower())
+    query = text(f"SELECT name FROM categories WHERE id = {items[2]}")
+    itt.append(db_sess.execute(query).fetchone()[0])
+    if items[3] != -1:
+        query = text(f"SELECT name FROM subcategories WHERE id = {items[3]}")
+        itt.append(db_sess.execute(query).fetchone()[0])
+    else:
+        itt.append(-1)
+    itt.append(items[-2].lower())
+    itt.append(items[-1].lower())
+    return render_template('card_of_thing.html', path=request.path, item=itt)
+
+
 @app.route('/wardrobe/<int:category>')
 def categories(category):
     db_sess = db_session.create_session()

@@ -269,6 +269,108 @@ nav {
     padding-right: 2vw;
     padding-left: 2vw;
 }
+.header_crd_add {
+            background-color: #fff;
+            padding: 15px 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo_crd_add {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .nav_crd_add {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav_crd_add a {
+            text-decoration: none;
+            color: #555;
+            font-size: 16px;
+        }
+
+        .nav_crd_add a:hover {
+            color: #000;
+        }
+
+        .container_crd_add {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .item-image_crd_add {
+            width: 300px;
+            height: 300px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #999;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .content-right_crd_add {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-details_crd_add {
+            margin-bottom: 30px;
+        }
+
+        .item-details_crd_add p {
+            margin-bottom: 15px;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .buttons_crd_add {
+            display: flex;
+            gap: 15px;
+            margin-top: auto;
+        }
+
+        .btn_crd_add {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-add_crd_add {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .btn-add_crd_add:hover {
+            background-color: #45a049;
+        }
+
+        .btn-delete_crd_add {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .btn-delete_crd_add:hover {
+            background-color: #d32f2f;
+        }}
 .add-in-look-title{
     font-family: "Inter", sans-serif;
     font-size: 28px;
