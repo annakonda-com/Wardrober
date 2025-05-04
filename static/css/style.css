@@ -300,19 +300,24 @@ nav {
         }
 
         .container_crd_add {
-            max-width: 800px;
+            max-width: 1000px;
+            padding: 40px;
+            gap: 40px;
             margin: 30px auto;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 30px;
             display: flex;
-            gap: 30px;
+            border: 6px solid #ACCDFE
         }
 
         .item-image_crd_add {
-            width: 300px;
-            height: 300px;
+            width: 600px;
+            height: 600px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
             background-color: #eee;
             display: flex;
             align-items: center;
@@ -355,21 +360,46 @@ nav {
         }
 
         .btn-add_crd_add {
-            background-color: #4CAF50;
+            display: inline-block;
+            padding: 20px 24px;
+            background-color: #1A73E8;
             color: white;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn-add_crd_add:hover {
-            background-color: #45a049;
+            background-color: #ACCDFE;
         }
 
         .btn-delete_crd_add {
-            background-color: #f44336;
+            display: inline-block;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 3px 24px;
+            background-color: white;
             color: white;
+            text-align: center;
+            text-decoration: none;
+            border: 3px solid #ACCDFE;
+            border-radius: 6px;
+            color: black;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .btn-delete_crd_add:hover {
-            background-color: #d32f2f;
+            background-color: #ACCDFE;
         }}
 .add-in-look-title{
     font-family: "Inter", sans-serif;
