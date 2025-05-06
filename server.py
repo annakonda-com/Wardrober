@@ -219,8 +219,18 @@ def add_item_in_look():
     query = text("SELECT name FROM complects")
     looks = [el[0] for el in list(db_sess.execute(query).fetchall())]
     look_choices = [('', '...'), ('newlook', 'Новый образ')]
-    for el in looks:
-        look_choices.append((el, el))
+    if not looks:
+        new_look = Complect(
+            user_id=current_user.get_id(),
+            name="Сегодняшний образ",
+            is_for_today=True,
+        )
+        db_sess.add(new_look)
+        db_sess.commit()
+        look_choices.append(('Сегодняшний образ', 'Сегодняшний образ'))
+    else:
+        for el in looks:
+            look_choices.append((el, el))
     form = AddItemInLook(look_choices=look_choices)
     query = text("SELECT name FROM wardrobeitems WHERE id = :item_id")
     item_name = db_sess.execute(query, {'item_id': item_id}).fetchone()[0]
