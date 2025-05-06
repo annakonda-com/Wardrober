@@ -3,7 +3,7 @@
 {% if current_user.is_authenticated %}
 
 <div class="container_crd_add">
-    <img class="item-image_crd_add" src="/static/users_images/{{item[-1]}}" />
+    <img class="item-image_crd_add" src="/static/users_images/{{item[-1]}}"/>
 
     <div class="content-right_crd_add">
         <div class="item-details_crd_add">
@@ -22,7 +22,7 @@
 
         <div class="buttons_crd_add">
             <a href="/add_item_in_look?id={{item_id}}" class="btn_crd_add btn-add_crd_add">Добавить в образ</a>
-            <button class="btn_crd_add btn-delete_crd_add">Удалить</button>
+            <a href="/wardrobe?id={{item_id}}" class="btn_crd_add btn-delete_crd_add">Удалить</a>
         </div>
     </div>
 </div>

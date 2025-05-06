@@ -103,9 +103,16 @@ def advice(id):
     return render_template('advice.html', page_title=new['title'][:10] + '...', new=new)
 
 
-@app.route('/wardrobe')
+@app.route('/wardrobe', methods=['GET', 'POST'])
 def wardrobe():
+    item_id = request.args.get('id')
     db_sess = db_session.create_session()
+    if item_id:
+        query = text(f"DELETE FROM complect_items WHERE wardrobe_item_id={item_id}")
+        db_sess.execute(query)
+        query = text(f"DELETE FROM wardrobeitems WHERE id={item_id}")
+        db_sess.execute(query)
+        db_sess.commit()
     query = text("SELECT id, name FROM colors")
     colors = db_sess.execute(query).fetchall()
     color = list(map(int, request.args.getlist('color')))
