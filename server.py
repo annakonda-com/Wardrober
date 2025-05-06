@@ -117,7 +117,8 @@ def wardrobe():
 @app.route('/wardrobe/card_of_thing/<int:item_id>')
 def card_of_thing(item_id):
     db_sess = db_session.create_session()
-    query = text(f"SELECT name, color_id, category_id, subcategory_id, season, img_url FROM wardrobeitems WHERE id = {item_id}")
+    query = text(
+        f"SELECT name, color_id, category_id, subcategory_id, season, img_url FROM wardrobeitems WHERE id = {item_id}")
     items = db_sess.execute(query).fetchone()
     itt = [items[0]]
     query = text(f"SELECT name FROM colors WHERE id = {items[1]}")
@@ -131,7 +132,7 @@ def card_of_thing(item_id):
         itt.append(-1)
     itt.append(items[-2].lower())
     itt.append(items[-1].lower())
-    return render_template('card_of_thing.html', path=request.path, item=itt)
+    return render_template('card_of_thing.html', path=request.path, item=itt, item_id=item_id)
 
 
 @app.route('/wardrobe/<int:category>')
@@ -213,15 +214,18 @@ def add_wardrobe_item():
 
 @app.route('/add_item_in_look', methods=['GET', 'POST'])
 def add_item_in_look():
+    item_id = request.args.get('id')
     db_sess = db_session.create_session()
     query = text("SELECT name FROM complects")
     looks = [el[0] for el in list(db_sess.execute(query).fetchall())]
     look_choices = [('', '...'), ('newlook', 'Новый образ')]
     for el in looks:
-        look_choices.append((el.lower(), el))
+        look_choices.append((el, el))
     form = AddItemInLook(look_choices=look_choices)
+    query = text("SELECT name FROM wardrobeitems WHERE id = :item_id")
+    item_name = db_sess.execute(query, {'item_id': item_id}).fetchone()[0]
     if form.validate_on_submit():
-        if form.look.data=='newlook':
+        if form.look.data == 'newlook':
             if form.newlookname.data in looks:
                 return render_template('add_item_in_look.html', title='Добавление вещи в образ',
                                        form=form, message="Образ с таким названием уже есть")
@@ -240,15 +244,12 @@ def add_item_in_look():
         else:
             query = text("SELECT id FROM complects WHERE name = :complect_name")
             look_id = db_sess.execute(query, {'complect_name': form.look.data}).fetchone()[0]
-        item_id = 1 #!!! надо сделать привязку к вещи
-        query=text('INSERT INTO complect_items (complect_id, wardrobe_item_id)  VALUES (:look_id, :item_id);')
-        print(look_id)
-        db_sess.execute(query, {'look_id': look_id, 'item_id': item_id})
+        query = text('INSERT INTO complect_items (complect_id, wardrobe_item_id)  VALUES (:look_id, :item_id);')
+        db_sess.execute(query, {'look_id': int(look_id), 'item_id': int(item_id)})
         db_sess.commit()
         return redirect("/wardrobe")
-    else:
-        print(form.errors)
-    return render_template('add_item_in_look.html', title='Добавление вещи в образ', form=form)
+    return render_template('add_item_in_look.html', title='Добавление вещи в образ', form=form,
+                           item_name=item_name)
 
 
 if __name__ == '__main__':

@@ -401,7 +401,7 @@ nav {
         .btn-delete_crd_add:hover {
             background-color: #ACCDFE;
         }}
-.add-in-look-title{
+#add-in-look-ttl{
     font-family: "Inter", sans-serif;
     font-size: 28px;
     font-weight: 400;
