@@ -270,137 +270,137 @@ nav {
     padding-left: 2vw;
 }
 .header_crd_add {
-            background-color: #fff;
-            padding: 15px 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    background-color: #fff;
+    padding: 15px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .logo_crd_add {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
+.logo_crd_add {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
 
-        .nav_crd_add {
-            display: flex;
-            gap: 20px;
-        }
+.nav_crd_add {
+    display: flex;
+    gap: 20px;
+}
 
-        .nav_crd_add a {
-            text-decoration: none;
-            color: #555;
-            font-size: 16px;
-        }
+.nav_crd_add a {
+    text-decoration: none;
+    color: #555;
+    font-size: 16px;
+}
 
-        .nav_crd_add a:hover {
-            color: #000;
-        }
+.nav_crd_add a:hover {
+    color: #000;
+}
 
-        .container_crd_add {
-            max-width: 1000px;
-            padding: 40px;
-            gap: 40px;
-            margin: 30px auto;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            border: 6px solid #ACCDFE
-        }
+.container_crd_add {
+    max-width: 1000px;
+    padding: 40px;
+    gap: 40px;
+    margin: 30px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    border: 6px solid #ACCDFE
+}
 
-        .item-image_crd_add {
-            width: 600px;
-            height: 600px;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            background-color: #eee;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            color: #999;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
+.item-image_crd_add {
+    width: 600px;
+    height: 600px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    color: #999;
+    font-size: 18px;
+    flex-shrink: 0;
+}
 
-        .content-right_crd_add {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+.content-right_crd_add {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
 
-        .item-details_crd_add {
-            margin-bottom: 30px;
-        }
+.item-details_crd_add {
+    margin-bottom: 30px;
+}
 
-        .item-details_crd_add p {
-            margin-bottom: 15px;
-            font-size: 16px;
-            text-align: left;
-        }
+.item-details_crd_add p {
+    margin-bottom: 15px;
+    font-size: 16px;
+    text-align: left;
+}
 
-        .buttons_crd_add {
-            display: flex;
-            gap: 15px;
-            margin-top: auto;
-        }
+.buttons_crd_add {
+    display: flex;
+    gap: 15px;
+    margin-top: auto;
+}
 
-        .btn_crd_add {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+.btn_crd_add {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
-        .btn-add_crd_add {
-            display: inline-block;
-            padding: 20px 24px;
-            background-color: #1A73E8;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+.btn-add_crd_add {
+    display: inline-block;
+    padding: 20px 24px;
+    background-color: #1A73E8;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-        .btn-add_crd_add:hover {
-            background-color: #ACCDFE;
-        }
+.btn-add_crd_add:hover {
+    background-color: #ACCDFE;
+}
 
-        .btn-delete_crd_add {
-            display: inline-block;
-            flex-wrap: wrap;
-            gap: 10px;
-            padding: 28px 24px;
-            background-color: white;
-            color: white;
-            text-align: center;
-            text-decoration: none;
-            border: 3px solid #ACCDFE;
-            border-radius: 6px;
-            color: black;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
+.btn-delete_crd_add {
+    display: inline-block;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 28px 24px;
+    background-color: white;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border: 3px solid #ACCDFE;
+    border-radius: 6px;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
 
-        .btn-delete_crd_add:hover {
-            background-color: #ACCDFE;
-        }}
+.btn-delete_crd_add:hover {
+    background-color: #ACCDFE;
+}}
 #add-in-look-ttl{
     font-family: "Inter", sans-serif;
     font-size: 28px;
