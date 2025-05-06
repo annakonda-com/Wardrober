@@ -150,7 +150,9 @@ nav {
     margin-right: 10px;
 }
 .cards_img{
-    height: 150px;
+    height: 200px;
+    weight: auto;
+    object-fit: contain;
 }
 .cards-grid_wrd {
     display: grid;
