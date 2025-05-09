@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% if current_user.is_authenticated %}
-<div class="my_container-wardrobe">
+<div class="my_container my_container-wardrobe">
     <div class="button-container_wrd">
         {% for complect in complects %}
         <a href="/look/{{complect[0]}}" class="btn_categories_wrd">{{complect[1]}}</a>
