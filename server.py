@@ -100,7 +100,7 @@ def advices():
 def advice(id):
     db_sess = db_session.create_session()
     new = db_sess.query(News).filter(News.id == id).first().to_dict()
-    return render_template('advice.html', page_title=new['title'][:10] + '...', new=new)
+    return render_template('advice.html', page_title=new['title'][:10] + '...', new=new, path=request.path)
 
 
 @app.route('/wardrobe', methods=['GET', 'POST'])
@@ -176,7 +176,39 @@ def item(captegory, subcategory, item_id):
 
 @app.route('/look')
 def look():
-    return render_template('look.html', path=request.path)
+    db_sess = db_session.create_session()
+    query = text(
+        "SELECT id, name FROM complects WHERE user_id = :user_id")
+    complects = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
+    return render_template('look.html', path=request.path, complects=complects)
+
+
+@app.route('/look/<int:comp_id>')
+def look_items(comp_id):
+    db_sess = db_session.create_session()
+    query = text(
+        "SELECT id, name FROM complects WHERE user_id = :user_id")
+    complects = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
+    query = text(
+        "SELECT wardrobeitems.id, wardrobeitems.name, "
+        "wardrobeitems.img_url FROM complect_items "
+        "JOIN wardrobeitems ON wardrobeitems.id = complect_items.wardrobe_item_id "
+        "WHERE complect_items.complect_id = :comp_id")
+    items = db_sess.execute(query, {'comp_id': comp_id}).fetchall()
+    return render_template('look.html', path=request.path, items=items, complects=complects)
+
+@app.route('/look/card_of_thing/<int:item_id>')
+def look_item(item_id):
+    db_sess = db_session.create_session()
+    query = text(
+        "SELECT wardrobeitems.name, colors.name, categories.name, subcategories.name, wardrobeitems.img_url, wardrobeitems.season "
+        "FROM wardrobeitems JOIN colors ON colors.id = wardrobeitems.color_id "
+        "JOIN categories ON categories.id = wardrobeitems.category_id "
+        "JOIN subcategories ON subcategories.id = wardrobeitems.subcategory_id "
+        "WHERE wardrobeitems.id = :item_id")
+    itemm = db_sess.execute(query, {'item_id': item_id}).fetchone()
+    return render_template('card_of_thing_look.html', item=itemm, path=request.path)
+
 
 
 @app.route('/add_wardrobe_item', methods=['GET', 'POST'])
@@ -223,8 +255,8 @@ def add_wardrobe_item():
 def add_item_in_look():
     item_id = request.args.get('id')
     db_sess = db_session.create_session()
-    query = text("SELECT name FROM complects")
-    looks = [el[0] for el in list(db_sess.execute(query).fetchall())]
+    query = text("SELECT name FROM complects WHERE user_id = :user_id")
+    looks = [el[0] for el in list(db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall())]
     look_choices = [('', '...'), ('newlook', 'Новый образ')]
     if not looks:
         new_look = Complect(

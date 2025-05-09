@@ -25,7 +25,7 @@
         <a href="/" class="nav-item" style="color:#000000;">Главная</a>
         {% endif %}
 
-        {% if path == '/advices' %}
+        {% if 'advice' in path %}
         <a href="/advices" class="nav-item" style="color:#0D6EFD;">Модные советы</a>
         {% else %}
         <a href="/advices" class="nav-item" style="color:#000000;">Модные советы</a>
@@ -37,10 +37,10 @@
         <a href="/wardrobe" class="nav-item" style="color:#000000;">Мой гардероб</a>
         {% endif %}
 
-        {% if path == '/look' %}
-        <a href="/look" class="nav-item" style="color:#0D6EFD;">Мой образ</a>
+        {% if 'look' in path %}
+        <a href="/look" class="nav-item" style="color:#0D6EFD;">Мои образы</a>
         {% else %}
-        <a href="/look" class="nav-item" style="color:#000000;">Мой образ</a>
+        <a href="/look" class="nav-item" style="color:#000000;">Мои образы</a>
         {% endif %}
         {% if current_user.is_authenticated %}
         <a id="user-name" href="/logout">{{ current_user.name }}</a>

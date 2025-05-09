@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+{% if current_user.is_authenticated %}
+
+<div class="container_crd_add">
+    <img class="item-image_crd_add" src="/static/users_images/{{item[4]}}"/>
+
+    <div class="content-right_crd_add">
+        <div class="item-details_crd_add">
+            <p><strong>{{item[0]}}</strong></p>
+            {% if item[2] != -1 %}
+            <p>Категория: {{item[2]}}</p>
+            {% endif %}
+            {% if item[3] != -1 %}
+            <p>Подкатегория: {{item[3]}}</p>
+            {% endif %}
+            <p>Цвет: {{item[1]}}</p>
+            {% if item[5] != 'a' %}
+            <p>Сезон: {{item[5]}}</p>
+            {% endif %}
+        </div>
+
+        <div class="buttons_crd_add">
+            <a href="#" class="btn_crd_add btn-add_crd_add">Удалить из образа</a>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

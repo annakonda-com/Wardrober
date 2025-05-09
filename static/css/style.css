@@ -257,6 +257,9 @@ nav {
 .btn_subcategories_wrd:hover {
     background-color: #ACCDFE;
 }
+.look{
+    width: 10vw;
+}
 
 .subcategories-scroll_wrd {
     display: flex;
