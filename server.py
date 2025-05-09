@@ -31,7 +31,9 @@ login_manager.init_app(app)
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
-    return db_sess.query(User).get(user_id)
+    user_id = db_sess.query(User).get(user_id)
+    db_sess.close()
+    return user_id
 
 
 @app.route('/logout')
@@ -49,7 +51,9 @@ def login():
         user = db_sess.query(User).filter(User.login == form.login.data).first()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
+            db_sess.close()
             return redirect("/")
+        db_sess.close()
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
@@ -82,6 +86,7 @@ def reqister():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
+        db_sess.close()
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
@@ -93,6 +98,7 @@ def advices():
     data = []
     for new in news:
         data.append(new.to_dict())
+    db_sess.close()
     return render_template('advices.html', data=data, path=request.path)
 
 
@@ -100,6 +106,7 @@ def advices():
 def advice(id):
     db_sess = db_session.create_session()
     new = db_sess.query(News).filter(News.id == id).first().to_dict()
+    db_sess.close()
     return render_template('advice.html', page_title=new['title'][:10] + '...', new=new, path=request.path)
 
 
@@ -117,6 +124,7 @@ def wardrobe():
     colors = db_sess.execute(query).fetchall()
     color = list(map(int, request.args.getlist('color')))
     season = request.args.getlist('season')
+    db_sess.close()
     return render_template('wardrobe.html', path=request.path,
                            items=get_items_by_filter_main(color, season, db_sess), colors=colors)
 
@@ -139,6 +147,7 @@ def card_of_thing(item_id):
         itt.append(-1)
     itt.append(items[-2].lower())
     itt.append(items[-1].lower())
+    db_sess.close()
     return render_template('card_of_thing.html', path=request.path, item=itt, item_id=item_id)
 
 
@@ -149,6 +158,7 @@ def categories(category):
     colors = db_sess.execute(query).fetchall()
     color = list(map(int, request.args.getlist('color')))
     season = request.args.getlist('season')
+    db_sess.close()
     return render_template('categories.html', items=get_items_by_filter_category(color, season, category, db_sess),
                            path=request.path, colors=colors)
 
@@ -160,6 +170,7 @@ def subcategories(category, subcategory):
     colors = db_sess.execute(query).fetchall()
     color = list(map(int, request.args.getlist('color')))
     season = request.args.getlist('season')
+    db_sess.close()
     return render_template('subcategories.html',
                            items=get_items_by_filter_subcategory(color, season, subcategory, db_sess),
                            path=request.path, colors=colors)
@@ -171,6 +182,7 @@ def item(captegory, subcategory, item_id):
     query = text(
         "SELECT name, img_url FROM wardrobeitems WHERE user_id = :user_id AND id = :item_id")
     items = db_sess.execute(query, {'user_id': current_user.get_id(), 'item_id': item_id}).fetchone()
+    db_sess.close()
     return render_template('wardrobe_item.html', path=request.path, name=items[0], url=items[1])
 
 
@@ -180,6 +192,7 @@ def look():
     query = text(
         "SELECT id, name FROM complects WHERE user_id = :user_id")
     complects = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
+    db_sess.close()
     return render_template('look.html', path=request.path, complects=complects)
 
 
@@ -195,10 +208,13 @@ def look_items(comp_id):
         "JOIN wardrobeitems ON wardrobeitems.id = complect_items.wardrobe_item_id "
         "WHERE complect_items.complect_id = :comp_id")
     items = db_sess.execute(query, {'comp_id': comp_id}).fetchall()
-    return render_template('look.html', path=request.path, items=items, complects=complects)
+    db_sess.close()
+    return render_template('look.html', path=request.path, items=items, complects=complects, look_id=comp_id)
+
 
 @app.route('/look/card_of_thing/<int:item_id>')
 def look_item(item_id):
+    look_id = request.args.get('look_id')
     db_sess = db_session.create_session()
     query = text(
         "SELECT wardrobeitems.name, colors.name, categories.name, subcategories.name, wardrobeitems.img_url, wardrobeitems.season "
@@ -207,8 +223,8 @@ def look_item(item_id):
         "JOIN subcategories ON subcategories.id = wardrobeitems.subcategory_id "
         "WHERE wardrobeitems.id = :item_id")
     itemm = db_sess.execute(query, {'item_id': item_id}).fetchone()
-    return render_template('card_of_thing_look.html', item=itemm, path=request.path)
-
+    db_sess.close()
+    return render_template('card_of_thing_look.html', item=itemm, path=request.path, item_id=item_id, look_id=look_id)
 
 
 @app.route('/add_wardrobe_item', methods=['GET', 'POST'])
@@ -245,9 +261,8 @@ def add_wardrobe_item():
         )
         db_sess.add(new_item)
         db_sess.commit()
+        db_sess.close()
         return redirect("/wardrobe")
-    else:
-        print(form.errors)
     return render_template('add_wardrobe_item.html', title='Добавление вещи', form=form)
 
 
@@ -262,7 +277,6 @@ def add_item_in_look():
         new_look = Complect(
             user_id=current_user.get_id(),
             name="Сегодняшний образ",
-            is_for_today=True,
         )
         db_sess.add(new_look)
         db_sess.commit()
@@ -284,21 +298,37 @@ def add_item_in_look():
             new_look = Complect(
                 user_id=current_user.get_id(),
                 name=form.newlookname.data,
-                is_for_today=False,
             )
             db_sess.add(new_look)
             db_sess.commit()
-            query = text("SELECT id FROM complects WHERE name = :complect_name")
-            look_id = db_sess.execute(query, {'complect_name': form.newlookname.data}).fetchone()[0]
+            query = text("SELECT id FROM complects WHERE name = :complect_name AND user_id = :user_id")
+            look_id = db_sess.execute(query, {'complect_name': form.newlookname.data,
+                                              'user_id': current_user.get_id()}).fetchone()[0]
         else:
-            query = text("SELECT id FROM complects WHERE name = :complect_name")
-            look_id = db_sess.execute(query, {'complect_name': form.look.data}).fetchone()[0]
+            query = text("SELECT id FROM complects WHERE name = :complect_name AND user_id = :user_id")
+            look_id = \
+                db_sess.execute(query, {'complect_name': form.look.data, 'user_id': current_user.get_id()}).fetchone()[
+                    0]
         query = text('INSERT INTO complect_items (complect_id, wardrobe_item_id)  VALUES (:look_id, :item_id);')
         db_sess.execute(query, {'look_id': int(look_id), 'item_id': int(item_id)})
         db_sess.commit()
+        db_sess.close()
         return redirect("/wardrobe")
+    db_sess.close()
     return render_template('add_item_in_look.html', title='Добавление вещи в образ', form=form,
                            item_name=item_name)
+
+
+@app.route('/del_item_from_look', methods=['GET', 'POST'])
+def del_item_from_look():
+    item_id = request.args.get('item_id')
+    look_id = request.args.get('look_id')
+    db_sess = db_session.create_session()
+    query = text(f"DELETE FROM complect_items WHERE wardrobe_item_id=:item_id AND complect_id=:look_id")
+    db_sess.execute(query, {'item_id': int(item_id), 'look_id': int(look_id)})
+    db_sess.commit()
+    db_sess.close()
+    return redirect('/look/' + str(look_id))
 
 
 if __name__ == '__main__':

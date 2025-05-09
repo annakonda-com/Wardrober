@@ -11,6 +11,5 @@ class Complect(SqlAlchemyBase, SerializerMixin):
                            primary_key=True, autoincrement=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,sqlalchemy.ForeignKey("users.id"))
     name = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    is_for_today = sqlalchemy.Column(sqlalchemy.Boolean)
 
     user = orm.relationship('User')

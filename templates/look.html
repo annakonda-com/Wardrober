@@ -15,7 +15,7 @@
                     {% for item in items %}
                     <div class="card_wrd">
                         <div class="card-title_wrd">{{item[1]}}</div>
-                        <a href="/look/card_of_thing/{{item[0]}}" class="card-link_wrd">Перейти к вещи</a>
+                        <a href="/look/card_of_thing/{{item[0]}}?look_id={{look_id}}" class="card-link_wrd">Перейти к вещи</a>
                         <br>
                         <img id="item-img" src="/static/users_images/{{item[2]}}"/>
                     </div>
@@ -38,20 +38,20 @@
     </div>
     {% else %}
     <div class="my_container">
-        <h1>Выберите комплект, чтобы просмотреть вещи, которые к нему относятся</h1>
+        <h1 class="inf-txt">Выберите комплект, чтобы просмотреть вещи, которые к нему относятся</h1>
     </div>
     {% endif %}
     {% else %}
     <div class="my_container">
-        <h1>Вы пока не добавили ни одной вещи в комплекты.</h1>
-        <h1>Вы можете это сделать после добавления вещи в гардероб</h1>
+        <h1 class="inf-txt">Вы пока не добавили ни одной вещи в комплекты.</h1>
+        <h1 class="inf-txt">Вы можете это сделать после добавления вещи в гардероб</h1>
     </div>
     {% endif %}
 </div>
 {% else %}
 <div class="my_container">
-    <h1>Для просмотра своего образа, пожалуйста, войдите или зарегистрируйтесь</h1>
-    <h2><a href="/login">Войти или зарегистрироваться</a></h2>
+    <h1 class="inf-txt">Для просмотра своего образа, пожалуйста, войдите или зарегистрируйтесь</h1>
+    <h2 class="inf-txt"><a href="/login">Войти или зарегистрироваться</a></h2>
 </div>
 {% endif %}
 {% endblock %}

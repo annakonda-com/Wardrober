@@ -426,3 +426,9 @@ nav {
     width: auto;
     object-fit: contain;
 }
+.inf-txt{
+    font-family: "Inter", sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    font-style: normal;
+}
