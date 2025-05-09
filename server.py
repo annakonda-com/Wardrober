@@ -217,14 +217,22 @@ def look_item(item_id):
     look_id = request.args.get('look_id')
     db_sess = db_session.create_session()
     query = text(
-        "SELECT wardrobeitems.name, colors.name, categories.name, subcategories.name, wardrobeitems.img_url, wardrobeitems.season "
-        "FROM wardrobeitems JOIN colors ON colors.id = wardrobeitems.color_id "
-        "JOIN categories ON categories.id = wardrobeitems.category_id "
-        "JOIN subcategories ON subcategories.id = wardrobeitems.subcategory_id "
-        "WHERE wardrobeitems.id = :item_id")
-    itemm = db_sess.execute(query, {'item_id': item_id}).fetchone()
-    db_sess.close()
-    return render_template('card_of_thing_look.html', item=itemm, path=request.path, item_id=item_id, look_id=look_id)
+        f"SELECT name, color_id, category_id, subcategory_id, season, img_url FROM wardrobeitems WHERE id = {item_id}")
+    items = db_sess.execute(query).fetchone()
+    itt = [items[0]]
+    query = text(f"SELECT name FROM colors WHERE id = {items[1]}")
+    itt.append(db_sess.execute(query).fetchone()[0].lower())
+    query = text(f"SELECT name FROM categories WHERE id = {items[2]}")
+    itt.append(db_sess.execute(query).fetchone()[0])
+    if items[3] != -1:
+        query = text(f"SELECT name FROM subcategories WHERE id = {items[3]}")
+        itt.append(db_sess.execute(query).fetchone()[0])
+    else:
+        itt.append(-1)
+    itt.append(items[-2].lower())
+    itt.append(items[-1].lower())
+    return render_template('card_of_thing_look.html', item=itt, path=request.path, item_id=item_id, look_id=look_id)
+
 
 
 @app.route('/add_wardrobe_item', methods=['GET', 'POST'])
