@@ -186,9 +186,16 @@ def item(captegory, subcategory, item_id):
     return render_template('wardrobe_item.html', path=request.path, name=items[0], url=items[1])
 
 
-@app.route('/look')
+@app.route('/look', methods=['GET', 'POST'])
 def look():
+    type = request.args.get('type')
     db_sess = db_session.create_session()
+    if type:
+        query = text(f"DELETE FROM complect_items WHERE complect_id=:look_id")
+        db_sess.execute(query, {'look_id': int(type)})
+        query = text(f"DELETE FROM complects WHERE id=:look_id")
+        db_sess.execute(query, {'look_id': int(type)})
+        db_sess.commit()
     query = text(
         "SELECT id, name FROM complects WHERE user_id = :user_id")
     complects = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
@@ -196,9 +203,14 @@ def look():
     return render_template('look.html', path=request.path, complects=complects)
 
 
-@app.route('/look/<int:comp_id>')
+@app.route('/look/<int:comp_id>', methods=['GET', 'POST'])
 def look_items(comp_id):
+    type = request.args.get('type')
     db_sess = db_session.create_session()
+    if type:
+        query = text(f"DELETE FROM complect_items WHERE complect_id=:look_id")
+        db_sess.execute(query, {'look_id': int(comp_id)})
+        db_sess.commit()
     query = text(
         "SELECT id, name FROM complects WHERE user_id = :user_id")
     complects = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchall()
@@ -232,7 +244,6 @@ def look_item(item_id):
     itt.append(items[-2].lower())
     itt.append(items[-1].lower())
     return render_template('card_of_thing_look.html', item=itt, path=request.path, item_id=item_id, look_id=look_id)
-
 
 
 @app.route('/add_wardrobe_item', methods=['GET', 'POST'])

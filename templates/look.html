@@ -28,12 +28,12 @@
     {% if path != '/look'%}
     <div class="button-container_wrd">
         <div style="margin-top: 10px;">
-            <a href="#" class="btn_subcategories_wrd look">Очистить комплект</a>
+            <a href="/look/{{look_id}}?type={{1}}" class="btn_subcategories_wrd look">Очистить комплект</a>
         </div>
     </div>
     <div class="button-container_wrd">
         <div style="margin-top: 10px;">
-            <a href="#" class="btn_subcategories_wrd look">Удалить комплект</a>
+            <a href="/look?type={{look_id}}" class="btn_subcategories_wrd look">Удалить комплект</a>
         </div>
     </div>
     {% else %}
