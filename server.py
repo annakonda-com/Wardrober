@@ -220,8 +220,11 @@ def look_items(comp_id):
         "JOIN wardrobeitems ON wardrobeitems.id = complect_items.wardrobe_item_id "
         "WHERE complect_items.complect_id = :comp_id")
     items = db_sess.execute(query, {'comp_id': comp_id}).fetchall()
+    query = text("SELECT id from wardrobeitems WHERE user_id = :user_id AND name LIKE 'Сегодняшний образ'") # c этим запросом что-то не так
+    today_look_id = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchone()
     db_sess.close()
-    return render_template('look.html', path=request.path, items=items, complects=complects, look_id=comp_id)
+    return render_template('look.html', path=request.path, items=items, complects=complects,
+                           look_id=comp_id, today_look_id=today_look_id[0])
 
 
 @app.route('/look/card_of_thing/<int:item_id>')

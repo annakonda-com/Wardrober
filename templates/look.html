@@ -31,11 +31,13 @@
             <a href="/look/{{look_id}}?type={{1}}" class="btn_subcategories_wrd look">Очистить комплект</a>
         </div>
     </div>
+    {% if look_id != today_look_id %}
     <div class="button-container_wrd">
         <div style="margin-top: 10px;">
             <a href="/look?type={{look_id}}" class="btn_subcategories_wrd look">Удалить комплект</a>
         </div>
     </div>
+    {% endif %}
     {% else %}
     <div class="my_container">
         <h1 class="inf-txt">Выберите комплект, чтобы просмотреть вещи, которые к нему относятся</h1>
