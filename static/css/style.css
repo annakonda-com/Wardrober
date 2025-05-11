@@ -270,9 +270,9 @@ nav {
 }
 
 .additem-button{
-    margin-left: 9vw;
     padding-right: 2vw;
     padding-left: 2vw;
+    margin: 0;
 }
 .header_crd_add {
     background-color: #fff;
@@ -431,4 +431,22 @@ nav {
     font-size: 28px;
     font-weight: 400;
     font-style: normal;
+}
+
+.drop-zone {
+    border: 2px dashed #ccc;
+    padding: 3vw;
+    text-align: center;
+    cursor: pointer;
+    background-color: #fafafa;
+    margin-bottom: 1vw;
+}
+
+.drop-zone--over {
+    border-style: solid;
+    background-color: #e8f7ff;
+}
+
+.file-input {
+    display: none;
 }

@@ -36,6 +36,30 @@
         document.getElementById('subcategoryLabel').style.display = 'none';
         document.getElementById('subcategory').style.display = 'none';
     };
+    document.addEventListener("DOMContentLoaded", function () {
+        const dropZone = document.querySelector('.drop-zone');
+        const fileInput = document.getElementById('image_input');
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, handleDragOver);
+        });
+
+        dropZone.addEventListener('drop', handleDrop);
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            dropZone.classList.add('drop-zone--over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            dropZone.classList.remove('drop-zone--over');
+
+            if (e.dataTransfer.files.length > 0) {
+              fileInput.files = e.dataTransfer.files;
+            }
+        }
+    });
 </script>
 <div class="login-container">
     <h1 class="login-title">Добавление вещи</h1>
@@ -54,20 +78,26 @@
         </div>
         {% endfor %}
         </p>
+
         <p>
             {{ form.image.label }}<br>
-            {{ form.image(class="form-control") }}<br>
+            <div class="drop-zone">
+            Перетащите файл сюда...
+            </div>
+        <p style="text-align:center"> или </p>
+            {{ form.image(id="image_input", class="form-control") }}<br>
             {% for error in form.image.errors %}
         <div class="alert alert-danger" role="alert">
             {{ error }}
         </div>
         {% endfor %}
         </p>
+
         <p>
             {{ form.category.label }}<br>
             {{ form.category(id='category', class="form-control", onchange='updateSubcategories()') }}
-            <label id="subcategoryLabel" , for="subcategory"><br>Выберите подкатегорию</label>
-            <select id="subcategory" , class="form-control" , name="subcategory">
+            <label id="subcategoryLabel", for="subcategory"><br>Выберите подкатегорию</label>
+            <select id="subcategory", class="form-control", name="subcategory">
                 <option value="">Выберите подкатегорию</option>
             </select><br>
             {% for error in form.category.errors %}
@@ -94,7 +124,9 @@
         </div>
         {% endfor %}
         </p>
+        <span style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
         <p>{{ form.submit(type="submit", class="btn btn-primary mybtn additem-button") }}</p>
+        </span>
     </form>
 </div>
 {% endblock %}
