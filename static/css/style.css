@@ -450,3 +450,9 @@ nav {
 .file-input {
     display: none;
 }
+
+.additeminlook-button{
+    margin-left: 9vw;
+    padding-right: 2vw;
+    padding-left: 2vw;
+}
