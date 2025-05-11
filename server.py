@@ -220,7 +220,7 @@ def look_items(comp_id):
         "JOIN wardrobeitems ON wardrobeitems.id = complect_items.wardrobe_item_id "
         "WHERE complect_items.complect_id = :comp_id")
     items = db_sess.execute(query, {'comp_id': comp_id}).fetchall()
-    query = text("SELECT id from complects WHERE user_id = :user_id AND name LIKE 'Сегодняшний образ'") # c этим запросом что-то не так
+    query = text("SELECT id from complects WHERE user_id = :user_id AND name LIKE 'Сегодняшний образ'")
     today_look_id = db_sess.execute(query, {'user_id': current_user.get_id()}).fetchone()
     db_sess.close()
     return render_template('look.html', path=request.path, items=items, complects=complects,
@@ -263,7 +263,6 @@ def add_wardrobe_item():
             subcategory_id = db_sess.execute(query, {'subcategory_name': form.subcategory.data.lower()}).fetchone()[0]
         else:
             subcategory_id = -1
-        print(color_id, category_id, subcategory_id, form.image.data)
         f = form.image.data
         filename = f.filename.split('.')
         filename = str(uuid4()) + '.' + filename[-1]
