@@ -33,10 +33,9 @@ body{
   flex: 1;
 }
 #bottom{
-    display: flex;
-    justify-content: flex-end;
     background-color: #D9D9D9;
     margin: 40px, 0, 0, 0;
+    height: 110px;
     width: 100vw;
 }
 .description{
@@ -456,20 +455,4 @@ nav {
     margin-left: 9vw;
     padding-right: 2vw;
     padding-left: 2vw;
-}
-
-#bottom-txt1{
-    float: right;
-    text-align: left;
-    margin-right: 1vw;
-    margin-top: 2vw;
-    font-size: 1vw;
-}
-
-#bottom-txt2{
-    float: right;
-    text-align: left;
-    margin-right: 3vw;
-    margin-top: 2vw;
-    font-size: 1vw;
 }
